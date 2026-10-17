@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Math Calculator</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:#f3f6ff;font-family:Arial,sans-serif}
+header{padding:22px 18px;border-bottom:1px solid #25304a;background:#10182b}
+.brand{font-size:23px;font-weight:bold;color:#76a7ff}
+.sub{color:#9ba9c4;font-size:13px;margin-top:6px}
+main{max-width:950px;margin:auto;padding:25px 16px}
+h1{font-size:30px;margin-bottom:8px}
+p{color:#a6b2cb}
+.search{display:flex;gap:8px;margin:24px 0}
+input{min-width:0;flex:1;background:#151f35;color:white;border:1px solid #34415e;padding:15px;border-radius:12px;font-size:16px}
+button{border:0;border-radius:10px;background:#477dff;color:white;padding:13px 16px;font-weight:bold;cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:14px}
+.card{background:#121b2f;border:1px solid #273551;border-radius:15px;padding:17px;min-height:145px}
+.art{height:65px;border-radius:10px;background:linear-gradient(135deg,#203b6a,#344e88);display:grid;place-items:center;font-size:26px;font-weight:bold}
+.card h3{margin:13px 0 5px;font-size:16px}
+.card p{font-size:13px;margin:0 0 12px}
+.card button{width:100%;font-size:13px}
+.section{margin-top:30px}
+.note{font-size:12px;color:#8492ad;margin-top:28px}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand">MATH CALCULATOR</div>
+ <div class="sub">STUDENT TOOLS • GAMES • QUICK SEARCH</div>
+</header>
+<main>
+ <h1>Your game zone</h1>
+ <p>Search the web or pick a game to play.</p>
+ <form class="search" id="searchForm">
+  <input id="query" placeholder="Search Spotify, 20-0, games..." aria-label="Search">
+  <button>Search</button>
+ </form>
+ <div class="section">
+  <h2>Sports and retro games</h2>
+  <div class="grid">
+   <article class="card">
+    <div class="art">🏈</div><h3>Retro Bowl</h3>
+    <p>Retro football</p>
+    <button onclick="searchGame('Retro Bowl')">Find game</button>
+   </article>
+   <article class="card">
+    <div class="art">⚽</div><h3>Soccer</h3>
+    <p>Football challenges</p>
+    <button onclick="searchGame('free soccer browser games')">Find games</button>
+   </article>
+   <article class="card">
+    <div class="art">🏀</div><h3>Basketball</h3>
+    <p>Hoop games</p>
+    <button onclick="searchGame('free basketball browser games')">Find games</button>
+   </article>
+   <article class="card">
+    <div class="art">🏎️</div><h3>Racing</h3>
+    <p>Drive and race</p>
+    <button onclick="searchGame('free racing browser games')">Find games</button>
+   </article>
+   <article class="card">
+    <div class="art">🎮</div><h3>Arcade</h3>
+    <p>Classic style games</p>
+    <button onclick="searchGame('free retro arcade browser games')">Find games</button>
+   </article>
+   <article class="card">
+    <div class="art">🧮</div><h3>Calculator</h3>
+    <p>Quick math answers</p>
+    <button onclick="location.href='#calculator'">Open calculator</button>
+   </article>
+  </div>
+ </div>
+ <div class="section" id="calculator">
+  <h2>Quick calculator</h2>
+  <div class="card">
+   <input id="math" placeholder="Example: (20 + 5) * 2">
+   <button onclick="solve()">Calculate</button>
+   <p id="answer">Your answer appears here.</p>
+  </div>
+ </div>
+ <p class="note">Math Calculator • A simple student dashboard. Game availability depends on the site you visit.</p>
+</main>
+<script>
+function searchGame(q){
+ location.href='https://www.google.com/search?q='+encodeURIComponent(q);
+}
+document.getElementById('searchForm').addEventListener('submit',function(e){
+ e.preventDefault();
+ const q=document.getElementById('query').value.trim();
+ if(q) searchGame(q);
+});
+function solve(){
+ const s=document.getElementById('math').value.trim();
+ const out=document.getElementById('answer');
+ if(!s){out.textContent='Enter a math expression first.';return;}
+ if(!/^[0-9+\-*/().%\s]+$/.test(s)){
+  out.textContent='Use numbers and math operators only.';return;
+ }
+ try{
+  const result=Function('"use strict";return ('+s+')')();
+  out.textContent=Number.isFinite(result)?'Answer: '+result:'Invalid calculation';
+ }catch(e){out.textContent='Check your expression and try again.';}
+}
+</script>
+</body>
+</html>
